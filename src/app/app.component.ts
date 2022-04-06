@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators} from '@angular/forms';
+import { PservicesService } from './services/pservices.service';
 
 @Component({
   selector: 'app-root',
@@ -8,7 +9,8 @@ import { FormControl, FormGroup, Validators} from '@angular/forms';
 })
 export class AppComponent implements OnInit {
    buildForm:any;
-constructor() {
+   getService:any = []
+constructor( private sharedComp:PservicesService) {
 }
 ngOnInit(): void {
   this.buildForm = new FormGroup(
@@ -19,7 +21,13 @@ ngOnInit(): void {
       phone : new FormControl('' , [Validators.required , Validators.pattern(/^(?:(?:\+|00)33[\s.-]{0,3}(?:\(0\)[\s.-]{0,3})?|0)[1-9](?:(?:[\s.-]?\d{2}){4}|\d{2}(?:[\s.-]?\d{3}){2})$/)]),
     }   
   )
+  this.sharedComp.firstService().subscribe(data => {
+     this.getService = data 
+     console.log(data)
+
+  })
 }
+
 
 getForm() {
   console.log(this.buildForm.value)
