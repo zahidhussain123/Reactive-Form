@@ -9,6 +9,7 @@ import { PservicesService } from './services/pservices.service';
 })
 export class AppComponent implements OnInit {
    buildForm:any;
+msg:string = ""
    getService:any = []
 constructor( private sharedComp:PservicesService) {
 }
@@ -22,10 +23,14 @@ ngOnInit(): void {
     }   
   )
   this.sharedComp.firstService().subscribe(data => {
-     this.getService = data 
+     this.getService = data ;
      console.log(data)
 
-  })
+  }, (error:string) => {
+this.msg = error
+
+  }
+  )
 }
 
 
